@@ -1,7 +1,7 @@
 # BDA_PART-B
 Part B (Big Data Analysis)
 
-# “Mapping Medical Research: A Multi-Level Analysis of Methods, Topics, and Outcomes”
+# “Compact Representation of Medical Research: Linking Topics, Methods, and Outcomes”
 
 ## Workflow Overview
 
