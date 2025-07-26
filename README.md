@@ -1,78 +1,76 @@
-# BDA_PART-B
-Part B (Big Data Analysis)
+# Unveiling Themes and Sentiments in Biomedical Abstracts with BERTopic, LDA, NMF, and Sentiment Tools
 
-# “Compact Representation of Medical Research: Linking Topics, Methods, and Outcomes”
+This project focuses on exploring medical research papers and hospital data using unsupervised Natural Language Processing (NLP) techniques. This time, I worked with an unsupervised task and tried my best to extract meaningful insights. The process began with comprehensive preprocessing using tokenization and lemmatization, followed by baseline modeling approaches.
 
-## Workflow Overview
+For topic modeling (Task 1), I applied LDA, NMF, and BERTopic. For sentiment analysis (Task 2), I used VADER, TextBlob, and SentiWordNet. I tuned all three topic modeling models and found that NMF performed best. In sentiment analysis, VADER emerged as the most consistent model due to its lexicon and rule-based structure. After selecting the best models, I analyzed the results using a series of visualizations to answer key research questions. Even though the task was unsupervised, I still tested the models on unseen data for further validation.
 
-### 1. Importing Libraries
-I started by importing all the required libraries for data handling, visualization, and text analysis.
+This project was particularly challenging due to the need to manage two parallel tasks, the time-consuming nature of tuning unsupervised models, and the difficulty of choosing appropriate evaluation metrics in the absence of labeled data.
 
----
+## 1. Importing Libraries
 
-### 2. Reading and Transforming Both Datasets
-- I loaded both the research paper dataset and the hospital dataset.
-- For the research papers, I retained only 4 essential columns: `ID`, `OBJECTIVE_BACKGROUND`, `METHODS`, and `RESULTS_CONCLUSIONS`.
-- For the hospital data, I combined all columns (excluding `Age Group` and `Gender`) into a single column called `Medical_Information`.
-- I limited the dataset to the first 50,000 rows for manageable and efficient analysis.
+All required libraries for data manipulation, visualization, NLP, modeling, and evaluation were imported.
 
----
+## 2. Reading and Transforming Both Datasets
 
-### 3. EDA on Raw Data
+- Loaded the research paper dataset and retained the following four columns:  
+  `ID`, `OBJECTIVE_BACKGROUND`, `METHODS`, `RESULTS_CONCLUSIONS`  
+- Loaded the hospital dataset and combined all columns (excluding Age Group and Gender) into one: `Medical_Information`  
+- Used the first 50,000 rows from both datasets for consistency and efficiency
 
-- **Plot 1**: Most Frequent Terms in Research Papers  
-- **Plot 2**: Count of Papers Containing Mathematical Terms / Formulas / Equations (analyzed by section)
+## 3. Exploratory Data Analysis (EDA) on Raw Data
 
----
+- Most frequent terms in research papers  
+- Distribution of mathematical terms and formulas by section  
 
-### 4. Data Cleaning
+## 4. Data Cleaning
 
-I performed a series of cleaning steps to prepare the text data:
+Steps applied to both datasets:
 
 - Removed URLs  
-- Removed mathematical equations and formulas (digits and math symbols)  
-- Removed lone characters (e.g., `'n'`)  
-- Removed extra spaces, newlines, and tabs  
+- Removed mathematical formulas (digits and symbols)  
+- Removed lone characters  
+- Removed excessive spaces, tabs, and newlines  
 - Converted all text to lowercase  
 - Removed stopwords  
-- Removed punctuations
+- Removed punctuation  
 
----
+## 5. Pattern Discovery and Visualization on Cleaned Data
 
-### 5. Pattern Discovery and Visualization on Cleaned Data
+**Univariate Analysis:**  
+- Top 20 research goals from `OBJECTIVE_BACKGROUND`  
+- Common phrasing in research conclusions  
+- Clustering of `METHODS` using KMeans  
+- Most common unigrams and bigrams per section  
 
-#### Univariate Analysis
+**Bivariate Analysis:**  
+- Readability vs length using Flesch Reading Ease Score  
 
-- **Plot 3**: Top 20 Dominant Research Goals Identified from Study Objectives  
-- **Plot 4**: How Do Medical Papers Conclude?  
-  I analyzed sentiment distribution using pretrained VADER sentiment classifier  
-- **Plot 5**: How Diverse Are Medical Methods?  
-  I used KMeans clustering on the `METHODS` section  
-- **Plot 6**: Top Unigrams & Bigrams by Section  
-  This gave a linguistic snapshot of each section
+**Multivariate Analysis:**  
+- Vocabulary richness, readability (Flesch), and complexity (Gunning Fog Index) per section  
+- Structural coherence using TF-IDF cosine similarity  
 
----
+## 6. Preprocessing
 
-#### Bivariate Analysis
+Applied tokenization and lemmatization to all text data prior to modeling.
 
-- **Plot 7**: Readability vs Length of Full Papers  
-  I used the Flesch Reading Ease Score to explore the relationship between document length and readability
+## 7. Modeling
 
----
+**Task 1: Topic Modeling**  
+- Applied LDA, NMF, and BERTopic  
+- NMF selected as final model after tuning and evaluation  
 
-#### Multivariate Analysis
+**Task 2: Sentiment Analysis**  
+- Used VADER, TextBlob, and SentiWordNet  
+- VADER selected based on performance and clarity of results  
 
-- **Plot 8**: Section-wise Linguistic Analysis of Medical Papers  
-  I compared the following metrics across sections:  
-  - Vocabulary Richness  
-  - Flesch Reading Ease  
-  - Gunning Fog Index
+## 8. Hyperparameter Tuning
 
-- **Plot 9**: Structural Coherence Across Research  
-  I used TF-IDF vectors and cosine similarity to measure semantic alignment between sections
+All three topic modeling approaches were tuned using custom parameter grids. NMF showed the most coherent and interpretable topics.
 
----
+## 9. Testing on Unseen Data
+
+Though unsupervised, models were evaluated on unseen test data to verify generalization and consistency.
 
 ## Final Notes
 
-This analysis helped me explore the structure, clarity, and complexity of medical research texts using NLP techniques.
+This project aimed to explore the linguistic, structural, and thematic patterns in medical texts. The challenges of handling two datasets, working across multiple unsupervised tasks, and choosing appropriate evaluation metrics were significant. However, through systematic experimentation and visualization, meaningful insights were achieved and final models were selected for both tasks.
