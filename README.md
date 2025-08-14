@@ -1,4 +1,4 @@
-# Unveiling Themes and Sentiments in Biomedical Abstracts with BERTopic, LDA, NMF, and Sentiment Tools
+## PaperSense: Medical Literature Topic and Success Analysis
 
 This project focuses on exploring medical research papers and hospital data using unsupervised Natural Language Processing (NLP) techniques. This time, I worked with an unsupervised task and tried my best to extract meaningful insights. The process began with comprehensive preprocessing using tokenization and lemmatization, followed by baseline modeling approaches.
 
