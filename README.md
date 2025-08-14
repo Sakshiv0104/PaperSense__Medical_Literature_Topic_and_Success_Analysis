@@ -1,133 +1,124 @@
-## PaperSense: Medical Literature Topic and Success Analysis
+# PaperSense: Medical Literature Topic and Success Analysis
 
 This project focuses on exploring medical research papers and hospital data using unsupervised Natural Language Processing (NLP) techniques. This time, I worked with an unsupervised task and tried my best to extract meaningful insights. The process began with comprehensive preprocessing using tokenization and lemmatization, followed by baseline modeling approaches.
 
-For topic modeling (Task 1), I applied LDA, NMF, and BERTopic. For sentiment analysis (Task 2), I used VADER, TextBlob, and SentiWordNet. I tuned all three topic modeling models and found that NMF performed best. In sentiment analysis, VADER emerged as the most consistent model due to its lexicon and rule-based structure. After selecting the best models, I analyzed the results using a series of visualizations to answer key research questions. Even though the task was unsupervised, I still tested the models on unseen data for further validation.
+For topic modeling (**Task 1**), I applied **LDA**, **NMF**, and **BERTopic**.  
+For sentiment analysis (**Task 2**), I used **VADER**, **TextBlob**, and **SentiWordNet**.  
+I tuned all three topic modeling models and found that NMF performed best. In sentiment analysis, VADER emerged as the most consistent model due to its lexicon and rule-based structure. After selecting the best models, I analyzed the results using a series of visualizations to answer key research questions. Even though the task was unsupervised, I still tested the models on unseen data for further validation.
 
-This project was particularly challenging due to the need to manage two parallel tasks, the time-consuming nature of tuning unsupervised models, and the difficulty of choosing appropriate evaluation metrics in the absence of labeled data.
+This project was particularly challenging due to:
+- Managing two parallel tasks
+- The time-consuming nature of tuning unsupervised models
+- Difficulty in choosing appropriate evaluation metrics in the absence of labeled data
+
+---
 
 ## Project Requirements
 
-## System Requirements
-Python 3.8+ (recommended: Python 3.9 or higher)
-RAM: Minimum 8GB (16GB recommended for processing 200k papers)
-Storage: 5GB free space for datasets and model outputs
-Processing: Multi-core CPU recommended (BioBERT embeddings are computationally intensive)
+### System Requirements
+- Python 3.8+ (recommended: Python 3.9 or higher)
+- RAM: Minimum 8GB (16GB recommended for processing 200k papers)
+- Storage: 5GB free space for datasets and model outputs
+- Processing: Multi-core CPU recommended (BioBERT embeddings are computationally intensive)
 
-## Core Python Libraries
-### Data Processing & Analysis
-pandas - Data manipulation and analysis
-numpy - Numerical computing
-scipy - Scientific computing utilities
-
-### Natural Language Processing
-nltk - Natural language toolkit for tokenization and preprocessing
-spacy - Advanced NLP processing
-gensim - Topic modeling (LDA implementation)
-transformers - BioBERT embeddings
-bertopic - Advanced topic modeling with BERT
-scikit-learn - NMF implementation and TF-IDF vectorization
-
-### Sentiment Analysis
-vaderSentiment - VADER sentiment analyzer
-textblob - TextBlob sentiment analysis
-sentiwordnet - SentiWordNet lexical resource
-
-### Machine Learning & Clustering
-umap-learn - UMAP dimensionality reduction
-hdbscan - HDBSCAN clustering algorithm
-scikit-learn - General ML utilities and metrics
-
-### Visualization
-matplotlib - Basic plotting
-seaborn - Statistical visualization
-plotly - Interactive visualizations
-wordcloud - Topic word cloud generation
-
-### Specialized Libraries
-requests - API calls to MeSH (Medical Subject Headings)
-json - JSON data handling for API responses
-re - Regular expressions for text cleaning
+### Core Python Libraries
+- `pandas` — Data manipulation and analysis  
+- `numpy` — Numerical computing  
+- `scipy` — Scientific computing utilities  
+- `nltk` — Tokenization and preprocessing  
+- `spacy` — Advanced NLP processing  
+- `gensim` — Topic modeling (LDA)  
+- `transformers` — BioBERT embeddings  
+- `bertopic` — BERT-based topic modeling  
+- `scikit-learn` — NMF implementation, TF-IDF vectorization  
+- `vaderSentiment` — Lexicon-based sentiment analysis  
+- `textblob` — Sentiment scoring and polarity  
+- `sentiwordnet` — Lexical sentiment resource  
+- `umap-learn` — Dimensionality reduction  
+- `hdbscan` — Density-based clustering  
+- `scikit-learn` — ML utilities and metrics  
+- `matplotlib` — Plotting  
+- `seaborn` — Statistical visualization  
+- `plotly` — Interactive plots  
+- `wordcloud` — Word cloud generation  
+- `requests` — API calls to MeSH  
+- `json` — Handling API responses  
+- `re` — Regular expressions for text cleaning  
 
 ### Dataset Requirements
-Primary Dataset: "200,000 Medical Research Paper Summary" from Kaggle
-Format: CSV with columns - ID, BACKGROUND_OBJECTIVES, METHODS, RESULTS_CONCLUSIONS
-Size: Approximately 2-3GB
-Source: Based on PubMed 200k RCT dataset
+- **Primary Dataset**: "200,000 Medical Research Paper Summary" (Kaggle)  
+- **Format**: CSV with columns — ID, BACKGROUND_OBJECTIVES, METHODS, RESULTS_CONCLUSIONS  
+- **Size**: ~2–3GB  
+- **Source**: Based on PubMed 200k RCT dataset  
 
 ### Optional Enhancements
-jupyter - Interactive development environment
-tqdm - Progress bars for long-running processes
-pickle - Model serialization and storage
+- `jupyter` — Interactive environment  
+- `tqdm` — Progress bars  
+- `pickle` — Model serialization  
 
+---
 
-The project includes the following sections :
+## Project Sections
 
-## 1. Importing Libraries
-
+### 1. Importing Libraries
 All required libraries for data manipulation, visualization, NLP, modeling, and evaluation were imported.
 
-## 2. Reading and Transforming Both Datasets
+### 2. Reading and Transforming Both Datasets
+- Loaded the research paper dataset and retained: `ID`, `OBJECTIVE_BACKGROUND`, `METHODS`, `RESULTS_CONCLUSIONS`
+- Loaded the hospital dataset, combining all columns (excluding Age Group and Gender) into `Medical_Information`
+- Used first 50,000 rows from both datasets for consistency and efficiency
 
-- Loaded the research paper dataset and retained the following four columns:  
-  `ID`, `OBJECTIVE_BACKGROUND`, `METHODS`, `RESULTS_CONCLUSIONS`  
-- Loaded the hospital dataset and combined all columns (excluding Age Group and Gender) into one: `Medical_Information`  
-- Used the first 50,000 rows from both datasets for consistency and efficiency
-
-## 3. Exploratory Data Analysis (EDA) on Raw Data
-
+### 3. Exploratory Data Analysis (EDA) on Raw Data
 - Most frequent terms in research papers  
 - Distribution of mathematical terms and formulas by section  
 
-## 4. Data Cleaning
-
-Steps applied to both datasets:
-
+### 4. Data Cleaning
+Applied to both datasets:
 - Removed URLs  
-- Removed mathematical formulas (digits and symbols)  
+- Removed mathematical formulas  
 - Removed lone characters  
-- Removed excessive spaces, tabs, and newlines  
-- Converted all text to lowercase  
+- Removed excessive spaces/tabs/newlines  
+- Converted to lowercase  
 - Removed stopwords  
 - Removed punctuation  
 
-## 5. Pattern Discovery and Visualization on Cleaned Data
+### 5. Pattern Discovery and Visualization on Cleaned Data
 
-**Univariate Analysis:**  
-- Top 20 research goals from `OBJECTIVE_BACKGROUND`  
-- Common phrasing in research conclusions  
-- Clustering of `METHODS` using KMeans  
-- Most common unigrams and bigrams per section  
+**Univariate Analysis**
+- Top 20 research goals from `OBJECTIVE_BACKGROUND`
+- Common phrasing in conclusions
+- KMeans clustering on `METHODS`
+- Most common unigrams/bigrams per section
 
-**Bivariate Analysis:**  
-- Readability vs length using Flesch Reading Ease Score  
+**Bivariate Analysis**
+- Readability vs length (Flesch Reading Ease)
 
-**Multivariate Analysis:**  
-- Vocabulary richness, readability (Flesch), and complexity (Gunning Fog Index) per section  
-- Structural coherence using TF-IDF cosine similarity  
+**Multivariate Analysis**
+- Vocabulary richness, readability (Flesch), complexity (Gunning Fog Index)
+- Structural coherence (TF-IDF cosine similarity)
 
-## 6. Preprocessing
+### 6. Preprocessing
+Applied tokenization and lemmatization to all text data.
 
-Applied tokenization and lemmatization to all text data prior to modeling.
+### 7. Modeling
 
-## 7. Modeling
+**Task 1: Topic Modeling**
+- LDA, NMF, BERTopic  
+- NMF selected after tuning
 
-**Task 1: Topic Modeling**  
-- Applied LDA, NMF, and BERTopic  
-- NMF selected as final model after tuning and evaluation  
+**Task 2: Sentiment Analysis**
+- VADER, TextBlob, SentiWordNet  
+- VADER selected for consistency and clarity
 
-**Task 2: Sentiment Analysis**  
-- Used VADER, TextBlob, and SentiWordNet  
-- VADER selected based on performance and clarity of results  
+### 8. Hyperparameter Tuning
+- Custom grids for all three topic models  
+- NMF showed highest topic coherence and interpretability
 
-## 8. Hyperparameter Tuning
+### 9. Testing on Unseen Data
+- Evaluated generalization and consistency despite being unsupervised
 
-All three topic modeling approaches were tuned using custom parameter grids. NMF showed the most coherent and interpretable topics.
-
-## 9. Testing on Unseen Data
-
-Though unsupervised, models were evaluated on unseen test data to verify generalization and consistency.
+---
 
 ## Final Notes
-
-This project aimed to explore the linguistic, structural, and thematic patterns in medical texts. The challenges of handling two datasets, working across multiple unsupervised tasks, and choosing appropriate evaluation metrics were significant. However, through systematic experimentation and visualization, meaningful insights were achieved and final models were selected for both tasks.
+This project explored linguistic, structural, and thematic patterns in medical texts.  
+Handling two datasets, multiple unsupervised tasks, and metric selection posed challenges, but systematic experimentation and visualization enabled meaningful insights and final model selection for both tasks.
