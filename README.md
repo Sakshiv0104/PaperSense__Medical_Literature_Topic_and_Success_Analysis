@@ -6,6 +6,63 @@ For topic modeling (Task 1), I applied LDA, NMF, and BERTopic. For sentiment ana
 
 This project was particularly challenging due to the need to manage two parallel tasks, the time-consuming nature of tuning unsupervised models, and the difficulty of choosing appropriate evaluation metrics in the absence of labeled data.
 
+## Project Requirements
+
+## System Requirements
+Python 3.8+ (recommended: Python 3.9 or higher)
+RAM: Minimum 8GB (16GB recommended for processing 200k papers)
+Storage: 5GB free space for datasets and model outputs
+Processing: Multi-core CPU recommended (BioBERT embeddings are computationally intensive)
+
+## Core Python Libraries
+### Data Processing & Analysis
+pandas - Data manipulation and analysis
+numpy - Numerical computing
+scipy - Scientific computing utilities
+
+### Natural Language Processing
+nltk - Natural language toolkit for tokenization and preprocessing
+spacy - Advanced NLP processing
+gensim - Topic modeling (LDA implementation)
+transformers - BioBERT embeddings
+bertopic - Advanced topic modeling with BERT
+scikit-learn - NMF implementation and TF-IDF vectorization
+
+### Sentiment Analysis
+vaderSentiment - VADER sentiment analyzer
+textblob - TextBlob sentiment analysis
+sentiwordnet - SentiWordNet lexical resource
+
+### Machine Learning & Clustering
+umap-learn - UMAP dimensionality reduction
+hdbscan - HDBSCAN clustering algorithm
+scikit-learn - General ML utilities and metrics
+
+### Visualization
+matplotlib - Basic plotting
+seaborn - Statistical visualization
+plotly - Interactive visualizations
+wordcloud - Topic word cloud generation
+
+### Specialized Libraries
+requests - API calls to MeSH (Medical Subject Headings)
+json - JSON data handling for API responses
+re - Regular expressions for text cleaning
+
+### Dataset Requirements
+Primary Dataset: "200,000 Medical Research Paper Summary" from Kaggle
+Format: CSV with columns - ID, BACKGROUND_OBJECTIVES, METHODS, RESULTS_CONCLUSIONS
+Size: Approximately 2-3GB
+Source: Based on PubMed 200k RCT dataset
+
+### Optional Enhancements
+jupyter - Interactive development environment
+tqdm - Progress bars for long-running processes
+pickle - Model serialization and storage
+
+
+The project includes the following sections :
+
 ## 1. Importing Libraries
 
 All required libraries for data manipulation, visualization, NLP, modeling, and evaluation were imported.
